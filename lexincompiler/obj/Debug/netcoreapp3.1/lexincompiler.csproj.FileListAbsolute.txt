@@ -1,0 +1,14 @@
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.exe
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.deps.json
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.runtimeconfig.json
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.runtimeconfig.dev.json
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.dll
+G:\Lexin\lexin\lexincompiler\bin\Debug\netcoreapp3.1\lexincompiler.pdb
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.csproj.AssemblyReference.cache
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.GeneratedMSBuildEditorConfig.editorconfig
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.AssemblyInfoInputs.cache
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.AssemblyInfo.cs
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.csproj.CoreCompileInputs.cache
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.dll
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.pdb
+G:\Lexin\lexin\lexincompiler\obj\Debug\netcoreapp3.1\lexincompiler.genruntimeconfig.cache

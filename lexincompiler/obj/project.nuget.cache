@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "oR5oRhUGn8iV/meieXNJruyXonENBkpUJVJPqa20qLTnjBuI2EZta6xCA9R72iDk6/cQgNMuqChMqeLHDYX/WA==",
+  "success": true,
+  "projectFilePath": "G:\\Lexin\\lexin\\lexincompiler\\lexincompiler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Dagan\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.21\\microsoft.netcore.app.host.win-x64.3.1.21.nupkg.sha512"
+  ],
+  "logs": []
+}
