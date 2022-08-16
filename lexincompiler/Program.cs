@@ -35,7 +35,9 @@ DivToken,
 OpParenToken,
 ClParenToken,
 BadToken,
-EndOfFileToken
+EndOfFileToken,
+NumberExpression,
+BinaryExpression
     }
 class SyntaxToken {
     public SyntaxToken(SyntaxKind kind, int position, string text, object value)
@@ -54,7 +56,7 @@ class SyntaxToken {
     class Lexer {
         
         private readonly string _text;
-        private int _postion;
+        private int _position;
 
         public Lexer(string text)
         {
@@ -63,61 +65,61 @@ class SyntaxToken {
 
         private char currentChar {
             get {
-                if (_postion >= _text.Length) {
+                if (_position >= _text.Length) {
                     return '\0';
                 }
-                return _text[_postion];
+                return _text[_position];
             }
         }
 
         private void Next() {
-            _postion++;
+            _position++;
         }
 
         public SyntaxToken NextToken() {
             //Looking for numbers, operators and spaces.
 
-            if (_postion >= _text.Length) {
-                return new SyntaxToken(SyntaxKind.EndOfFileToken, _postion, "\0", null);
+            if (_position >= _text.Length) {
+                return new SyntaxToken(SyntaxKind.EndOfFileToken, _position, "\0", null);
             }
 
             if (char.IsDigit(currentChar)) {
-                var start = _postion;
+                var start = _position;
 
                 while (char.IsDigit(currentChar)) {
                     Next();
                 }
-                var length = _postion - start;
+                var length = _position - start;
                 var text = _text.Substring(start, length);
                 int.TryParse(text, out var value);
                 return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
             }
 
             if (char.IsWhiteSpace(currentChar)) {
-                var start = _postion;
+                var start = _position;
 
                 while (char.IsWhiteSpace(currentChar)) {
                     Next();
                 }
-                var length = _postion - start;
+                var length = _position - start;
                 var text = _text.Substring(start, length);
                 return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
             }
-
-            if (currentChar == '+') {
-                return new SyntaxToken(SyntaxKind.PlusToken, _postion++, "+", null);
-            }if (currentChar == '-') {
-                return new SyntaxToken(SyntaxKind.MinusToken, _postion++, "-", null);
-            }if (currentChar == '*') {
-                return new SyntaxToken(SyntaxKind.MultToken, _postion++, "*", null);
-            }if (currentChar == '/') {
-                return new SyntaxToken(SyntaxKind.DivToken, _postion++, "/", null);
-            }if (currentChar == '(') {
-                return new SyntaxToken(SyntaxKind.OpParenToken, _postion++, "(", null);
-            }if (currentChar == ')') {
-                return new SyntaxToken(SyntaxKind.ClParenToken, _postion++, ")", null);
+            switch (currentChar) {
+                case '+':
+                return new SyntaxToken(SyntaxKind.PlusToken, _position++, "+", null);
+                case '-':
+                return new SyntaxToken(SyntaxKind.MinusToken, _position++, "-", null);
+                case '*':
+                 return new SyntaxToken(SyntaxKind.MultToken, _position++, "*", null);
+                case '/':
+                return new SyntaxToken(SyntaxKind.DivToken, _position++, "/", null);
+                case '(':
+                return new SyntaxToken(SyntaxKind.OpParenToken, _position++, "(", null);
+                case ')':
+                return new SyntaxToken(SyntaxKind.ClParenToken, _position++, ")", null);
             }
-            return new SyntaxToken(SyntaxKind.BadToken, _postion++, _text.Substring(_postion - 1, 1), null);
+            return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
         
         
         
@@ -127,13 +129,39 @@ class SyntaxToken {
 
     }
 
-class SyntaxNode {
-    public abst
+abstract class SyntaxNode {
+    public abstract SyntaxKind Kind {get;}
+}
+
+abstract class ExpressionSyntax : SyntaxNode {
+
+}
+
+sealed class NumberExpressionSyntax : SyntaxNode {
+    public NumberExpressionSyntax(SyntaxToken numberToken)
+    {
+        NumberToken = numberToken;
+    }
+    public SyntaxToken NumberToken {get;}
+    public override SyntaxKind Kind => SyntaxKind.NumberExpression;
+}
+
+sealed class BinaryExpressionSyntax : ExpressionSyntax {
+    public BinaryExpressionSyntax(ExpressionSyntax left, SyntaxNode operatorToken, ExpressionSyntax right)
+    {
+        Left = left;
+        OperatorToken = operatorToken;
+        Right = right;
+    }
+    public ExpressionSyntax Left {get;}
+    public SyntaxNode OperatorToken {get;}
+    public ExpressionSyntax Right {get;}
+    public override SyntaxKind Kind => SyntaxKind.BinaryExpression;
 }
 
 class Parser {
     private readonly SyntaxToken[] _tokens;
-    private int _postion;
+    private int _position;
 
     public Parser(string text)
     {
@@ -149,14 +177,15 @@ class Parser {
         
         _tokens = tokens.ToArray();
     }
-        private SyntaxToken Peek(int offset) {
-            var index = _postion + offset;
+    
+    private SyntaxToken Peek(int offset) {
+            var index = _position + offset;
             if (index >= _tokens.Length) {
                 return _tokens[_tokens.Length - 1];
             }
             return _tokens[index];
         }
-        
+
     private SyntaxToken current => Peek(0);
     
     }
